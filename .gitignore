@@ -1,0 +1,8 @@
+backend/clipboooard
+backend/clipboooard.db
+backend/cert.pem
+backend/key.pem
+backend/uploads/
+frontend/dist/
+frontend/node_modules/
+data/
