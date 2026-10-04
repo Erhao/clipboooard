@@ -22,7 +22,7 @@ var (
 func initAuth(store *Store) {
 	password = os.Getenv("CLIPBOARD_PASSWORD")
 	if password == "" {
-		password = "clipboooard"
+		password = "clipboooardMPX31T"
 	}
 
 	secret, err := store.GetSecret()

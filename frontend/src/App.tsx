@@ -27,6 +27,29 @@ function timeAgo(d: string): string {
   return Math.floor(h / 24) + ' 天前'
 }
 
+async function copyToClipboard(text: string): Promise<boolean> {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text)
+      return true
+    } catch {}
+  }
+  try {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.style.position = 'fixed'
+    ta.style.opacity = '0'
+    document.body.appendChild(ta)
+    ta.focus()
+    ta.select()
+    const ok = document.execCommand('copy')
+    document.body.removeChild(ta)
+    return ok
+  } catch {
+    return false
+  }
+}
+
 function getToken(): string | null {
   return localStorage.getItem('clipboooard_token')
 }
@@ -171,11 +194,11 @@ export default function App() {
   }
 
   const copyText = async (content: string, id: string) => {
-    try {
-      await navigator.clipboard.writeText(content)
+    const ok = await copyToClipboard(content)
+    if (ok) {
       setCopiedId(id)
       setTimeout(() => setCopiedId(null), 2000)
-    } catch {}
+    }
   }
 
   useEffect(() => {
